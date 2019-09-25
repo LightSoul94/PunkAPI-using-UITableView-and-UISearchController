@@ -12,26 +12,16 @@ import Alamofire
 import SVProgressHUD
 import PunkAPI
 
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
-    }
-
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
-    }
-}
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     //Interface Builders
     @IBOutlet weak var searchContainerView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var Tabella: UITableView!
+    
+    //dichiarazione variabile contenente la UserDefaults.standard
+    var defaults = UserDefaults.standard
+    
     
     //variabili per il controllo barra di ricerca
     var searchController: UISearchController!
@@ -56,8 +46,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var descriptionChar=[Character]()
     var descriptionVar: String!
     var descriptionArr=[String]()
-    
-    var page = 1
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,8 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //MARK: - Punk API
     func retrieveDataFromPunkAPIDatabase() {
         // Prendi dati dal database
-
-        let request = BeersRequest(filter: [.abv(condition: .more, value: 4.3)], page: page)
+        let request = BeersRequest(filter: [.abv(condition: .more, value: 4.3)])
         
         PunkApi().get(request, queue: .main) { [weak self] beersResult in
             
@@ -249,6 +236,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.descriptionArr.removeLast()
             
             
+            //chiama la default
+            self.defaults.set(self.thumbnailArr, forKey: "thumbnails")
+            self.defaults.synchronize()
+            
+            self.defaults.set(self.nameArr, forKey: "names")
+            self.defaults.synchronize()
+            
+            self.defaults.set(self.taglineArr, forKey: "taglines")
+            self.defaults.synchronize()
+            
+            self.defaults.set(self.descriptionArr, forKey: "descriptions")
+            self.defaults.synchronize()
             
             self.setUpBeers()
         }
@@ -313,30 +312,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    //This will check when teh table reach the bottom, then the page will turn the next page
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if searching == false {
-        if Tabella.contentOffset.y >= (Tabella.contentSize.height - Tabella.frame.size.height) {
-            //you reached end of the table
-            print(page)
-            page += 1
-            SVProgressHUD.show()
-            //incubo dei duplicati part. 2
-            
-            
-            
-            retrieveDataFromPunkAPIDatabase()
-            Tabella.reloadData()
-            SVProgressHUD.dismiss()
-        }
-        }
-    }
-    
-    
     //MARK: - Configure Beer Class
     func setUpBeers() {
-                for i in 0...nameArr.count - 1 {
-                    self.beerArray.append(Beer(name: nameArr[i] , tagline: taglineArr[i], image: thumbnailArr[i], description: descriptionArr[i]))
+                let names = self.defaults.array(forKey: "names")!
+                let taglines = self.defaults.array(forKey: "taglines")!
+                let thumbnails = self.defaults.array(forKey: "thumbnails")!
+                let detail = self.defaults.array(forKey: "descriptions")!
+                
+                
+                for i in 0...names.count - 1 {
+                    self.beerArray.append(Beer(name: names[i] as! String, tagline: taglines[i] as! String, image: thumbnails[i] as! String, description: detail[i] as! String))
                 }
                 self.currentBeerArray = self.beerArray
                 self.Tabella.reloadData()
