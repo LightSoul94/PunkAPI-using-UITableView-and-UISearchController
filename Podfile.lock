@@ -1,0 +1,26 @@
+PODS:
+  - Alamofire (4.9.0)
+  - PunkAPI (1.0.0):
+    - PunkAPI/API (= 1.0.0)
+  - PunkAPI/API (1.0.0)
+  - SVProgressHUD (2.2.5)
+
+DEPENDENCIES:
+  - Alamofire
+  - PunkAPI
+  - SVProgressHUD
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - PunkAPI
+    - SVProgressHUD
+
+SPEC CHECKSUMS:
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  PunkAPI: 09312c2007ef0aae0fcaefa7dc7e7a732c594b47
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+
+PODFILE CHECKSUM: 0632f5370e77dff382363933339e7e569b31e0d2
+
+COCOAPODS: 1.7.4
