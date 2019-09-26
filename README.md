@@ -13,6 +13,6 @@ _____________________________________________________
 Future updates:
 _____________________________________________________
 
-1. Beers of the next page will be added when the table scroll is at the bottom
-2. A UISegmentedController will be added to filter beers by blonde, brown and dark one
-3. More details will be added on the popup screen
+1. Beers of the next page will be added when the table scroll is at the bottom;
+2. A UISegmentedController will be added to filter beers by blonde, brown and dark one;
+3. More details will be added on the popup screen.
