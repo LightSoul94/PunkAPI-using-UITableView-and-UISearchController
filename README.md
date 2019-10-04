@@ -1,5 +1,4 @@
-# PunkAPI using UITableView and UISearchController 
-# in swift 5.0
+# PunkAPI using UITableView and UISearchController in swift 5.0
 This is an example to how make a UITableView with a UISearchController using Punk API. I also added a popup screen when a row is selected.
 
 
