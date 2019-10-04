@@ -10,7 +10,7 @@ Punk API documentation: https://punkapi.com/documentation/v2
 
 _____________________________________________________
 
-Future updates:
+Future features:
 _____________________________________________________
 
 1. Beers of the next page will be added when the table scroll is at the bottom;
